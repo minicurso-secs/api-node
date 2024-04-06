@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { assert } from 'console';
 import * as http from 'http'
 
 
@@ -44,9 +43,7 @@ http.createServer(async (req, res)=>{
       }
       else{
         res.statusCode = 404;
-        res.end("rota nao encontrada")
+        res.end("Rota nao encontrada")
       }
-
-    
 }).listen(3333)
 console.log("Servidor rodando na porta 3333")
