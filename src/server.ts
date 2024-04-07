@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import * as http from 'http'
 
-
 const prismaC = new PrismaClient();
 http.createServer(async (req, res)=>{
     const {method, url} = req;
@@ -21,8 +20,10 @@ http.createServer(async (req, res)=>{
                     "nota_Corte": jsonResponse["Nota_Corte"]
                 },
              });
-             res.statusCode = 201
-             res.end("Deu certo")
+             res.statusCode = 201;
+             res.setHeader('Content-Type', 'text/plain');
+             res.setHeader('Access-Control-Allow-Origin', '*');
+             res.end("Deu certo");
         });
       } catch (error) {
         console.error("Erro criar ao registro:", error);
@@ -34,6 +35,7 @@ http.createServer(async (req, res)=>{
         try {
             const dados = await prismaC.modalidade.findMany();
             res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.end(JSON.stringify(dados));
         } catch (error) {
             console.error("Erro ao buscar registros:", error);
@@ -47,3 +49,4 @@ http.createServer(async (req, res)=>{
       }
 }).listen(3333)
 console.log("Servidor rodando na porta 3333")
+
